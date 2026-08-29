@@ -1,0 +1,22 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        l, r = 0, len(s) - 1
+
+        while l < r:
+            # check if its alphanumeric
+            while l < r and not self.alphaNum(s[l]):
+                l += 1
+            while r > l and not self.alphaNum(s[r]):
+                r -= 1
+            # if they're not equal we want to return false immediately
+            if s[l].lower() != s[r].lower():
+                return False
+            l, r = l + 1, r - 1
+
+        return True
+    # Helper function to determine if alphanumeric
+    def alphaNum(self, c):
+        # we can use ASCII values through ord
+        return (ord('A') <= ord(c) <= ord('Z') or
+                ord('a') <= ord(c) <= ord('z') or
+                ord('0') <= ord(c) <= ord('9'))
