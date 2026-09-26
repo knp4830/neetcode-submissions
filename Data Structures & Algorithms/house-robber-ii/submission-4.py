@@ -1,0 +1,28 @@
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        # O(2 * n) space solution?
+        n = len(nums)
+
+        # Base case, they're adjacent in a circle so return the max
+        if n <= 2:
+            return max(nums)
+
+        dp0, dp1 = [0] * (n - 1), [0] * n
+
+        # dp0 we choose to include 0 and we choose between house 0 or house 1
+        dp0[0] = nums[0]
+        dp0[1] = max(nums[0], nums[1])
+        # dp1 we don't include house 0, we choose house 1
+        dp1[0] = 0
+        dp1[1] = nums[1]
+
+        for i in range(2, n - 1):
+            dp0[i] = max(dp0[i - 1], nums[i] + dp0[i - 2])
+        # We can go to the end cause we include 1
+        for i in range(2, n):
+            dp1[i] = max(dp1[i - 1], nums[i] + dp1[i - 2])
+        
+        return max(dp1[-1], dp0[-1])
+
+
+        
